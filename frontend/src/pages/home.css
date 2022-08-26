@@ -1,0 +1,15 @@
+.backgroundHome {
+    height: 100vh;
+    /* Hay que agregar linear gradient para que haga efecto de opacidad */
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4)), url("https://images.unsplash.com/photo-1497215728101-856f4ea42174?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8b2ZmaWNlJTIwYmFja2dyb3VuZHxlbnwwfHwwfHw%3D&w=1000&q=80") no-repeat center;
+    background-size: cover;
+}
+
+
+
+.border-bottom span {
+    display: inline;
+    border-bottom: 1px solid white;
+
+
+}
