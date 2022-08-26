@@ -16,7 +16,7 @@ router.route('/add').post((req, res) =>
     // Guardo toda la información en un objeto de tipo User 
     const newUser = new User({   // Guardo los datos que ingresa el usuario en variables
         username: req.body.username,
-        nickname: Number(req.body.nickname),
+        nickname: (req.body.nickname),
         age: Number(req.body.age)
     });
 

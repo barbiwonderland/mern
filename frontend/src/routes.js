@@ -8,12 +8,10 @@ export const MainRoutes = () =>
     return (
         <>
             <Layout>
-                <BrowserRouter>
-                    <Routes>
-                        <Route exact path="/" element={<Home />} />
-                        <Route path="/users" element={<Users />} />
-                    </Routes>
-                </BrowserRouter>
+                <Routes>
+                    <Route exact path="/" element={<Home />} />
+                    <Route path="/users" element={<Users />} />
+                </Routes>
             </Layout>
         </>
     );
