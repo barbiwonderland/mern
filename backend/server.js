@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 app.use(bodyParser.json());
-
+const port = process.env.PORT || 000;
 
 app.use(cors());
 app.use(express.json());
@@ -29,7 +29,7 @@ const usersRouter = require('./routes/user');
 
 app.use('/users', usersRouter);
 
-app.listen(process.env.PORT || 8000, () =>
+app.listen(port, () =>
 {
     console.log(`Server is running on port: ${port}`);
 });
