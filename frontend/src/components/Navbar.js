@@ -13,7 +13,7 @@ export const Navbar = () =>
                         <span className="navbar-toggler-icon"></span>
                     </button>
                     <div className="collapse navbar-collapse " id="navbarNav">
-                        <ul className="navbar-nav ml-auto">
+                        <ul className="navbar-nav ms-auto">
                             <li className="nav-item">
                                 <Link to="/" className="nav-link active" aria-current="page" href="#">Home</Link>
                             </li>

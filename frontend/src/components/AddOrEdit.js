@@ -3,7 +3,7 @@ import { Formik, Form, Field } from "formik";
 import { addUser, EditUser } from '../services/userService';
 import { useParams } from 'react-router-dom';
 
-export const AddOrEdit = ({ isEdit, updateUser }) =>
+export const AddOrEdit = ({ isEdit, updateUser, handleClose }) =>
 {
 
     const { id } = useParams();
@@ -65,9 +65,11 @@ export const AddOrEdit = ({ isEdit, updateUser }) =>
                     if (!isEdit)
                     {
                         addUser(values);
+                        handleClose();
                     } else
                     {
-                        EditUser(values,id);
+                        EditUser(values, id);
+                        handleClose();
                     }
                     setTimeout(() =>
                     {
@@ -78,48 +80,41 @@ export const AddOrEdit = ({ isEdit, updateUser }) =>
             >
                 {({ errors, touched, isValidating }) => (
                     <div className="container">
-                        <div className="col-sm-12">
-                            <Form>
-                                <div className="form-group">
-                                    <Field
-                                        type="text"
-                                        name="username"
-                                        className="form-control"
-                                        placeholder="Username"
-                                        validate={validateNickName}
-                                    />
-                                    {errors.username && touched.username && errorMessage(errors.username)}
-                                </div>
-                                <div className="form-group">
-                                    <Field
-                                        className="form-control"
-                                        type="text"
-                                        placeholder="Nickname"
-                                        name="nickname"
-                                        validate={validateUserName}
-                                    />
-                                    {errors.nickname && touched.nickname && errorMessage(errors.nickname)}
-                                </div>
-                                <div className="form-group">
-                                    <Field
-                                        className="form-control"
-                                        type="number"
-                                        placeholder="Age"
-                                        name="age"
-                                        validate={validateAge}
-                                    />
-                                    {errors.age &&
-                                        touched.age &&
-                                        errorMessage(errors.age)}
-                                </div>
+                        <div className=" input-group mb-3 d-flex  justify-content-center">
+                            <Form className='w-75 '>
+                                <Field
+                                    type="text"
+                                    name="username"
+                                    className="form-control "
+                                    placeholder="Username"
+                                    validate={validateNickName}
+                                />
+                                {errors.username && touched.username && errorMessage(errors.username)}
+
+                                <Field
+                                    className="form-control mt-2"
+                                    type="text"
+                                    placeholder="Nickname"
+                                    name="nickname"
+                                    validate={validateUserName}
+                                />
+                                {errors.nickname && touched.nickname && errorMessage(errors.nickname)}
+                                <Field
+                                    className="form-control  mt-2"
+                                    type="number"
+                                    placeholder="Age"
+                                    name="age"
+                                    validate={validateAge}
+                                />
+                                {errors.age &&
+                                    touched.age &&
+                                    errorMessage(errors.age)}
 
 
-                                <div className="form-group text-center">
-                                    <button className="btn btn-dark" type="submit" >
-                                        Submit
-                                    </button>
+                                <button className="btn btn-dark mt-2 d-flex mx-auto  " type="submit" >
+                                    Submit
+                                </button>
 
-                                </div>
                             </Form>
                         </div>
                     </div>

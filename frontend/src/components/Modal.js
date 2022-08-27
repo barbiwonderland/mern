@@ -8,11 +8,11 @@ export function Moda_l({ show, handleClose, isEdit, updateUser })
 
     return (
         <>
-            <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>{isEdit ? "Editar Usuario" : "Agregar usuario"}</Modal.Title>
+            <Modal centered onEscapeKeyDown show={show} onHide={handleClose}>
+                <Modal.Header closeButton >
+                    <Modal.Title className=' mx-auto'>{isEdit ? "Editar Usuario" : "Agregar usuario"} </Modal.Title>
                 </Modal.Header>
-                <Modal.Body> <AddOrEdit isEdit={isEdit} updateUser={updateUser} /></Modal.Body>
+                <Modal.Body> <AddOrEdit isEdit={isEdit} updateUser={updateUser} handleClose={handleClose} /></Modal.Body>
             </Modal>
         </>
     );

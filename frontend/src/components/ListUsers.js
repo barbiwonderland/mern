@@ -39,42 +39,47 @@ export const ListUsers = () =>
 
     };
     return (
-        <>
-            <table key={user.id} className="table table-striped text-center">
-                <thead>
-                    <tr>
-                        {/* <th scope="col">#</th> */}
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Usuario</th>
-                        <th scope="col">Edad</th>
-                        <th scope="col">Editar</th>
-                        <th scope="col">Eliminar</th>
-                    </tr>
-                </thead>
-                <tbody>
+        user.length > 0 ?
+            <>
 
-                    {user && user.map((user) =>
-                        <>
-                            <tr>
-                                {/* <th scope="row">{user._id}</th> */}
-                                <td>{user.nickname}</td>
-                                <td>{user.username}</td>
-                                <td>{user.age}</td>
-                                <td onClick={() => handleEdit(user)} ><BiEdit /></td>
-                                <td
-                                    onClick={() => handleDelete(user._id)}><BiTrash /></td>
-                            </tr>
-                        </>
+                <table key={user.id} className="table table-striped text-center">
+                    <thead>
+                        <tr>
+                            {/* <th scope="col">#</th> */}
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Usuario</th>
+                            <th scope="col">Edad</th>
+                            <th scope="col">Editar</th>
+                            <th scope="col">Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-
-                    )}
-
-                    <Moda_l isEdit={isEdit} show={show} handleClose={handleClose} updateUser={updateUser} />
-                </tbody>
-            </table >
-
-        </>
+                        {user && user.map((user) =>
+                            <>
+                                <tr>
+                                    {/* <th scope="row">{user._id}</th> */}
+                                    <td>{user.nickname}</td>
+                                    <td>{user.username}</td>
+                                    <td>{user.age}</td>
+                                    <td onClick={() => handleEdit(user)} ><BiEdit /></td>
+                                    <td
+                                        onClick={() => handleDelete(user._id)}><BiTrash /></td>
+                                </tr>
+                            </>
 
 
+                        )}
+
+                        <Moda_l isEdit={isEdit} show={show} handleClose={handleClose} updateUser={updateUser} />
+                    </tbody>
+                </table >
+
+            </>
+
+            :
+            <>
+                <h5 className='mt-2  text-center'>Todavía no hay usuarios registrados..</h5>
+            </>
     );
 };
