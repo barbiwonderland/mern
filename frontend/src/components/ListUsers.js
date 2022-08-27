@@ -42,7 +42,7 @@ export const ListUsers = () =>
         user.length > 0 ?
             <>
 
-                <table key={user.id} className="table table-striped text-center">
+                <table className="table table-striped text-center">
                     <thead>
                         <tr>
                             {/* <th scope="col">#</th> */}
@@ -57,8 +57,7 @@ export const ListUsers = () =>
 
                         {user && user.map((user) =>
                             <>
-                                <tr>
-                                    {/* <th scope="row">{user._id}</th> */}
+                                <tr key={user._id}>
                                     <td>{user.nickname}</td>
                                     <td>{user.username}</td>
                                     <td>{user.age}</td>
