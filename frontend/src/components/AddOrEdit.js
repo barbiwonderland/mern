@@ -65,12 +65,15 @@ export const AddOrEdit = ({ isEdit, updateUser, handleClose }) =>
                     if (!isEdit)
                     {
                         addUser(values);
+
                         handleClose();
                     } else
                     {
                         EditUser(values, id);
                         handleClose();
+
                     }
+
                     setTimeout(() =>
                     {
                         console.log(JSON.stringify(values, null, 2));
