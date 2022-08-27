@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Formik, Form, Field } from "formik";
-import { addUser, editUser } from '../services/userService';
-export const AddOrEdit = ({ edit }) =>
+import { addUser, EditUser } from '../services/userService';
+import { useParams } from 'react-router-dom';
+
+export const AddOrEdit = ({ isEdit, updateUser }) =>
 {
+
+    const { id } = useParams();
     // Messages
     const required = "This field is required";
     const maxLength = "Your input exceed maximum length";
@@ -45,26 +49,25 @@ export const AddOrEdit = ({ edit }) =>
         }
         return error;
     };
+
+
     return (
         <>
-            <Formik
-                initialValues={{
-                    username: "",
-                    nickname: "",
-                    age: "",
 
-                }}
+            <Formik
+
+                initialValues={isEdit ? {
+                    username: updateUser.username, nickname: updateUser.nickname, age: updateUser.age
+                } : { username: "", nickname: "", age: "" }
+                }
                 onSubmit={(values, { setSubmitting }) =>
                 {
-                    if (edit)
+                    if (!isEdit)
                     {
-                        console.log("editando");
-                        editUser(values);
+                        addUser(values);
                     } else
                     {
-                        console.log("agregando");
-
-                        addUser(values);
+                        EditUser(values,id);
                     }
                     setTimeout(() =>
                     {
@@ -115,12 +118,14 @@ export const AddOrEdit = ({ edit }) =>
                                     <button className="btn btn-dark" type="submit" >
                                         Submit
                                     </button>
+
                                 </div>
                             </Form>
                         </div>
                     </div>
                 )}
             </Formik>
+
         </>
     );
 };
