@@ -51,7 +51,7 @@ export const ListUsers = () =>
             setUserFiltered(result);
         } else
         {
-            // sino vuelvo a cargar la lista de filstrados con el array original usuarios
+            // sino vuelvo a cargar la lista 
             setUserFiltered(user);
         }
 
@@ -69,7 +69,7 @@ export const ListUsers = () =>
     useEffect(() =>
     {
         FilterByCategory(valueForSearch);
-    }, [valueForSearch]);
+    }, [valueForSearch, user]);
 
 
 
@@ -77,8 +77,8 @@ export const ListUsers = () =>
     const handleDelete = (userForDelete) =>
     {
         deleteUser(userForDelete);
-        const filteredUsers = userFiltered.filter((us => us._id !== userForDelete));
-        setUserFiltered(filteredUsers);
+        const filteredUsers = user.filter((us => us._id !== userForDelete));
+        setUser(filteredUsers);
     };
     const handleEdit = (userEdited) =>
     {
