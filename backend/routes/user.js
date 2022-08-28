@@ -4,6 +4,7 @@ let User = require('../models/user.model');
 router.route('/').get((req, res) =>
 {
     User.find()
+        // PORQUE ACA ES RES.JSON?
         .then(users => res.json(users))
         .catch(err => res.status(400).json('Error: ' + err));
 });
@@ -11,7 +12,6 @@ router.route('/').get((req, res) =>
 router.route('/add').post((req, res) =>
 {
 
-    // const date = Date.parse(req.body.date);
 
     // Guardo toda la información en un objeto de tipo User 
     const newUser = new User({   // Guardo los datos que ingresa el usuario en variables
@@ -20,17 +20,20 @@ router.route('/add').post((req, res) =>
         age: Number(req.body.age)
     });
 
+    // ACTUALIZO LOS DATOS EN LA API CON EL USUARIO CREADO EN EL PASO ANTERIOR
     newUser.save()
         .then(() => res.json('User added!'))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
+// PORQUE REQ.PARAMS.ID  SI YA LE ESTOY PASANDO DIRECTAMENTE EL ID
 router.route('/:id').get((req, res) =>
 {
     User.findById(req.params.id)
         .then(user => res.json(user))
         .catch(err => res.status(400).json('Error: ' + err));
 });
+
 
 router.route('/:id').delete((req, res) =>
 {
