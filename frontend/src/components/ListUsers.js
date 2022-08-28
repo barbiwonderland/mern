@@ -14,21 +14,28 @@ export const ListUsers = () =>
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     let navigate = useNavigate();
-    useEffect(() =>
+
+    const handleUsers = () =>
     {
         getUsers().then(res => 
         {
             setUser(res.data);
+            setIsLoading(false);
         });
+    };
 
+    useEffect(() =>
+    {
 
+        handleUsers();
+        // esta ok esta manera de actualizar los datos? 
     }, [user]);
 
     const handleDelete = (userdeleted) =>
     {
         deleteUser(userdeleted);
-        const filteredUsers = user.filter((us => us._id !== userdeleted));
-        setUser(filteredUsers);
+        /*         const filteredUsers = user.filter((us => us._id !== userdeleted));
+                setUser(filteredUsers); */
     };
     const handleEdit = (userEdited) =>
     {
@@ -37,8 +44,6 @@ export const ListUsers = () =>
         setUpdateUser(userEdited);
         setIsEdit(true);
         handleShow();
-
-
     };
     return (
 

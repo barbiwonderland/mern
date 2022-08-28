@@ -115,7 +115,8 @@ export const AddOrEdit = ({ isEdit, updateUser, handleClose }) =>
 
 
                                 <button className="btn btn-dark mt-2 d-flex mx-auto  " type="submit" >
-                                    Agregar
+                                    {isEdit ? "Editar" : "Agregar"}
+
                                 </button>
 
                             </Form>
