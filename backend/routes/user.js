@@ -21,12 +21,13 @@ router.route('/add').post((req, res) =>
     });
 
     // ACTUALIZO LOS DATOS EN LA API CON EL USUARIO CREADO EN EL PASO ANTERIOR
+    // . save , .find etc  viene de mongoose 
     newUser.save()
         .then(() => res.json('User added!'))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-// PORQUE REQ.PARAMS.ID  SI YA LE ESTOY PASANDO DIRECTAMENTE EL ID
+// REQ PARAMS ID LO ENCUENTRA EXPRESS , REQUEST ES LO QUE LE LLEGA DEL CLIENTE AL SERVIDOR , Y RESP ES RESPUESTA 
 router.route('/:id').get((req, res) =>
 {
     User.findById(req.params.id)

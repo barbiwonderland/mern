@@ -7,6 +7,7 @@ import "./App.css";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  // OJO React strict mode renderizad dos veces los componentes
   <React.StrictMode>
     {/* Browser Router tiene que ir acá para que funcione bien */}
     <BrowserRouter>

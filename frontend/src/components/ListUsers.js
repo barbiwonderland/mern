@@ -15,31 +15,32 @@ export const ListUsers = () =>
     const handleShow = () => setShow(true);
     let navigate = useNavigate();
 
-    const handleUsers = () =>
+    const handleUsers = async () =>
     {
-        getUsers().then(res => 
+        await getUsers().then(res => 
         {
             setUser(res.data);
             setIsLoading(false);
         });
     };
-
+    // En el use effect si pasamos por parametro la variable users, se crea un loop eterno, 
+    //porque en el primer renderizado detecta el cambio dentro de handleUsers funcion de "user",
+    //entonces vuelve a ejecutar el useeffect infinitas veces
     useEffect(() =>
     {
-
         handleUsers();
-        // esta ok esta manera de actualizar los datos? 
-    }, [user]);
 
-    const handleDelete = (userdeleted) =>
+    }, []);
+
+    const handleDelete = (userForDelete) =>
     {
-        deleteUser(userdeleted);
-        /*         const filteredUsers = user.filter((us => us._id !== userdeleted));
-                setUser(filteredUsers); */
+        deleteUser(userForDelete);
+        const filteredUsers = user.filter((us => us._id !== userForDelete));
+        setUser(filteredUsers);
     };
     const handleEdit = (userEdited) =>
     {
-        console.log("editar usuario" + userEdited);
+        console.log("editar usuario" + JSON.stringify(userEdited));
         navigate(`/users/${userEdited._id}`);
         setUpdateUser(userEdited);
         setIsEdit(true);
@@ -51,10 +52,9 @@ export const ListUsers = () =>
             user.length > 0 ?
                 <>
 
-                    <table className="table table-striped text-center">
+                    <table className="table table-striped text-center" >
                         <thead>
                             <tr>
-                                {/* <th scope="col">#</th> */}
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Usuario</th>
                                 <th scope="col">Edad</th>
@@ -65,7 +65,7 @@ export const ListUsers = () =>
                         <tbody>
 
                             {user && user.map((user) =>
-                                <>
+                                <React.Fragment key={user._id}>
                                     <tr key={user._id}>
                                         <td>{user.nickname}</td>
                                         <td>{user.username}</td>
@@ -74,12 +74,12 @@ export const ListUsers = () =>
                                         <td
                                             onClick={() => handleDelete(user._id)}><BiTrash /></td>
                                     </tr>
-                                </>
+                                </React.Fragment>
 
 
                             )}
 
-                            <Moda_l isEdit={isEdit} show={show} handleClose={handleClose} updateUser={updateUser} />
+                            <Moda_l isEdit={isEdit} show={show} handleClose={handleClose} updateUser={updateUser} setUser={setUser} user={user} />
                         </tbody>
                     </table >
 

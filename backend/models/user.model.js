@@ -4,7 +4,6 @@ const userSchema = new Schema({
     username: { type: String, required: true },
     nickname: { type: String, required: true },
     age: { type: Number, required: true },
-    // date: { type: Date, required: true },
 
 }, {
     timestamps: true,

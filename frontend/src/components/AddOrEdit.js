@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Formik, Form, Field } from "formik";
 import { addUser, EditUser } from '../services/userService';
 import { useParams } from 'react-router-dom';
 
-export const AddOrEdit = ({ isEdit, updateUser, handleClose }) =>
+export const AddOrEdit = ({ isEdit, updateUser, handleClose, setUser, user }) =>
 {
 
     const { id } = useParams();
@@ -65,11 +65,21 @@ export const AddOrEdit = ({ isEdit, updateUser, handleClose }) =>
                     if (!isEdit)
                     {
                         addUser(values);
-
                         handleClose();
+
                     } else
                     {
                         EditUser(values, id);
+                        // creo un array copia del original user traido de "ListUsers"
+                        const usersEdited = user;
+                        // Encuentro el indice del elemento de usuarios que quiero modificar
+                        const objIndex = usersEdited.findIndex((obj => obj._id == id));
+                        // Modifico directamente el elemento que quiero modificar a través del index
+                        usersEdited[objIndex].username = values.username;
+                        usersEdited[objIndex].nickname = values.nickname;
+                        usersEdited[objIndex].age = values.age;
+                        // Modifico el estado user con userEdited
+                        setUser(usersEdited);
                         handleClose();
 
                     }
