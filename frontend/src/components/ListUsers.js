@@ -5,20 +5,25 @@ import { Moda_l } from './Modal';
 import { useNavigate } from 'react-router-dom';
 import { Spinner } from "react-bootstrap";
 import { Searcher } from './Searcher';
+import MessageTost from './MessageTost';
 export const ListUsers = () =>
 {
     const [user, setUser] = useState([]);
     const [isEdit, setIsEdit] = useState(false);
     const [updateUser, setUpdateUser] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [show, setShow] = useState(false);
+    const [showToast, setShowToast] = useState(false);
+    const [showModal, setShowModal] = useState(false);
     const [valueForSearch, setValueForSearch] = useState("");
     const [userFiltered, setUserFiltered] = useState([]);
+    let message = "";
+
     let navigate = useNavigate();
 
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleClose = () => setShowModal(false);
+    const handleShow = () => setShowModal(true);
+    const handleCloseToast = () => setShowToast(false);
 
     const handleUsers = async () =>
     {
@@ -37,8 +42,10 @@ export const ListUsers = () =>
         if (value !== '')
         {
             // filtro los elementos que incluyen el valor por nombre o nickname
+            // paso los valores que ingresa el usuario a lowercase para unificar
+            value = value.toLowerCase();
             const result = user.filter(
-                user => user.username.includes(value) || user.nickname.includes(value)
+                user => user.username.toLowerCase().includes(value) || user.nickname.toLowerCase().includes(value)
             );
             // se modifica el segundo array con los datos originales
             setUserFiltered(result);
@@ -70,8 +77,8 @@ export const ListUsers = () =>
     const handleDelete = (userForDelete) =>
     {
         deleteUser(userForDelete);
-        const filteredUsers = user.filter((us => us._id !== userForDelete));
-        setUser(filteredUsers);
+        const filteredUsers = userFiltered.filter((us => us._id !== userForDelete));
+        setUserFiltered(filteredUsers);
     };
     const handleEdit = (userEdited) =>
     {
@@ -114,9 +121,10 @@ export const ListUsers = () =>
 
                             )}
 
-                            <Moda_l isEdit={isEdit} show={show} handleClose={handleClose} updateUser={updateUser} setUser={setUser} user={user} />
+                            <Moda_l isEdit={isEdit} showModal={showModal} handleClose={handleClose} showToast={showToast} setShowToast={setShowToast} updateUser={updateUser} setUser={setUser} user={user} />
                         </tbody>
                     </table >
+                    <MessageTost handleCloseToast={handleCloseToast} showToast={showToast} setShowToast={setShowToast} isEdit={isEdit} />
 
                 </>
 
@@ -124,5 +132,6 @@ export const ListUsers = () =>
                 <>
                     <h5 className='mt-2  text-center'>Todavía no hay usuarios registrados..</h5>
                 </>
+
     );
 };

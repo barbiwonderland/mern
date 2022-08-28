@@ -3,7 +3,7 @@ import { Formik, Form, Field } from "formik";
 import { addUser, EditUser } from '../services/userService';
 import { useParams } from 'react-router-dom';
 
-export const AddOrEdit = ({ isEdit, updateUser, handleClose, setUser, user }) =>
+export const AddOrEdit = ({ isEdit, updateUser, handleClose, setUser, user, setShowToast, toastMessage }) =>
 {
 
     const { id } = useParams();
@@ -65,6 +65,7 @@ export const AddOrEdit = ({ isEdit, updateUser, handleClose, setUser, user }) =>
                     if (!isEdit)
                     {
                         addUser(values);
+                        setShowToast(true);
                         handleClose();
 
                     } else
@@ -80,6 +81,7 @@ export const AddOrEdit = ({ isEdit, updateUser, handleClose, setUser, user }) =>
                         usersEdited[objIndex].age = values.age;
                         // Modifico el estado user con userEdited
                         setUser(usersEdited);
+                        setShowToast(true);
                         handleClose();
 
                     }
@@ -134,7 +136,6 @@ export const AddOrEdit = ({ isEdit, updateUser, handleClose, setUser, user }) =>
                     </div>
                 )}
             </Formik>
-
         </>
     );
 };

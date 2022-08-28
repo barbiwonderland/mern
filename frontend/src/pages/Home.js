@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import home from "./home.css";
 import { Moda_l } from '../components/Modal';
+import MessageTost from '../components/MessageTost';
 export const Home = () =>
 {
-    const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const [showModal, setShowModal] = useState(false);
+    const [showToast, setShowToast] = useState(false);
+    let toastMessage = "";
+    const handleClose = () => setShowModal(false);
+    const handleShow = () => setShowModal(true);
+    const handleCloseToast = () => setShowToast(false);
 
     return (
         <>
@@ -15,8 +19,8 @@ export const Home = () =>
                     Agregar usuario
                 </button>
             </div>
-            <Moda_l show={show} handleClose={handleClose} />
-
+            <Moda_l showModal={showModal} handleClose={handleClose} showToast={showToast} toastMessage={toastMessage} setShowToast={setShowToast} />
+            <MessageTost handleCloseToast={handleCloseToast} showToast={showToast} toastMessage="Usuario agregado correctamente" />
         </>
     );
 };

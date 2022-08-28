@@ -6,25 +6,27 @@ import Toast from 'react-bootstrap/Toast';
 import ToastContainer from 'react-bootstrap/ToastContainer';
 
 
-function MessageTost({ message })
+function MessageTost({ showToast, handleCloseToast, isEdit })
 {
-    const [show, setShow] = useState(true);
 
     return (
         <Row>
             <Col xs={6}>
                 <ToastContainer position="top-end">
-                    <Toast onClose={() => setShow(false)} show={show} delay={3000} autohide >
+                    <Toast className="text-secondary " bg="light" onClose={handleCloseToast} show={showToast} delay={3000} autohide  >
                         <Toast.Header>
                             <img
                                 src="holder.js/20x20?text=%20"
                                 className="rounded me-2"
                                 alt=""
                             />
-                            <strong className="me-auto">Mensaje:</strong>
+                            <strong className="me-auto">Atención:</strong>
+                            <small>Justo ahora</small>
                         </Toast.Header>
                         <Toast.Body>
-                            {message}
+                            {
+                                isEdit ? "Usuario editado correctamente" : "Usuario agregado correctamente"
+                            }
                         </Toast.Body>
                     </Toast>
                 </ToastContainer>
