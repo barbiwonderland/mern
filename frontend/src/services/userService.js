@@ -16,7 +16,7 @@ export const deleteUser = (id) =>
 
 export const addUser = (newUser) =>
 {
-  axios.post(`https://usersmern.herokuapp.com/users/add`, newUser).then(res => console.log(res.data));;
+  axios.post(`https://usersmern.herokuapp.com/users/add`, newUser).then(res => console.log(res.data));
 
 };
 

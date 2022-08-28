@@ -4,6 +4,7 @@ import { ListUsers } from '../components/ListUsers';
 export const Users = () =>
 {
     return (
-        <ListUsers />
+        < ListUsers />
+
     );
 };
