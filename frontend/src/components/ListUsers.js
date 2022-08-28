@@ -51,7 +51,7 @@ export const ListUsers = () =>
             setUserFiltered(result);
         } else
         {
-            // sino vuelvo a cargar la lista 
+            // sino vuelvo a cargar la lista porque quedo seteado con la busqueda anterior que hizo el usuario
             setUserFiltered(userFromApi);
         }
 
@@ -66,6 +66,8 @@ export const ListUsers = () =>
 
     }, []);
 
+    // llaas a filtrar la busqueda cada vez que el usuario cambia algo en el buscador y cada vez que se elimina
+    //definitivamente un usuario en la lista original
     useEffect(() =>
     {
         FilterByCategory(valueForSearch);
@@ -77,15 +79,21 @@ export const ListUsers = () =>
     const handleDelete = (userForDelete) =>
     {
         deleteUser(userForDelete);
+        //filtro la lista original de usuarios por todos menos el id que elimino
         const filteredUsers = userFromApi.filter((us => us._id !== userForDelete));
+        // cambio el estado de usuarios original por el construido en el paso anterior
         setUserFromApi(filteredUsers);
     };
     const handleEdit = (userEdited) =>
     {
         console.log("editar usuario" + JSON.stringify(userEdited));
+        //agrego el id en la barra de busqueda
         navigate(`/users/${userEdited._id}`);
+        // envio a este estado los datos del usuario a editar
         setUpdateUser(userEdited);
+        // pongo el true el estado de edición
         setIsEdit(true);
+        // pongo la ventana modal en true
         handleShow();
     };
     return (
