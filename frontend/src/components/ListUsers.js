@@ -8,7 +8,7 @@ import { Searcher } from './Searcher';
 import MessageTost from './MessageTost';
 export const ListUsers = () =>
 {
-    const [user, setUser] = useState([]);
+    const [userFromApi, setUserFromApi] = useState([]);
     const [isEdit, setIsEdit] = useState(false);
     const [updateUser, setUpdateUser] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -29,7 +29,7 @@ export const ListUsers = () =>
     {
         await getUsers().then(res => 
         {
-            setUser(res.data);
+            setUserFromApi(res.data);
             setUserFiltered(res.data);
             setIsLoading(false);
         });
@@ -44,7 +44,7 @@ export const ListUsers = () =>
             // filtro los elementos que incluyen el valor por nombre o nickname
             // paso los valores que ingresa el usuario a lowercase para unificar
             value = value.toLowerCase();
-            const result = user.filter(
+            const result = userFromApi.filter(
                 user => user.username.toLowerCase().includes(value) || user.nickname.toLowerCase().includes(value)
             );
             // se modifica el segundo array con los datos originales
@@ -52,7 +52,7 @@ export const ListUsers = () =>
         } else
         {
             // sino vuelvo a cargar la lista 
-            setUserFiltered(user);
+            setUserFiltered(userFromApi);
         }
 
     };
@@ -69,7 +69,7 @@ export const ListUsers = () =>
     useEffect(() =>
     {
         FilterByCategory(valueForSearch);
-    }, [valueForSearch, user]);
+    }, [valueForSearch, userFromApi]);
 
 
 
@@ -77,8 +77,8 @@ export const ListUsers = () =>
     const handleDelete = (userForDelete) =>
     {
         deleteUser(userForDelete);
-        const filteredUsers = user.filter((us => us._id !== userForDelete));
-        setUser(filteredUsers);
+        const filteredUsers = userFromApi.filter((us => us._id !== userForDelete));
+        setUserFromApi(filteredUsers);
     };
     const handleEdit = (userEdited) =>
     {
@@ -91,7 +91,7 @@ export const ListUsers = () =>
     return (
 
         isLoading ? <div className='justify-content-center d-flex align-items-center height-100 '><Spinner animation="border" variant="info" size="lg" className="spinner-size" /></div> :
-            user.length > 0 ?
+            userFromApi.length > 0 ?
                 <>
                     <Searcher setValueForSearch={setValueForSearch} />
                     <table className="table table-striped text-center" >
@@ -121,7 +121,7 @@ export const ListUsers = () =>
 
                             )}
 
-                            <Moda_l isEdit={isEdit} showModal={showModal} handleClose={handleClose} showToast={showToast} setShowToast={setShowToast} updateUser={updateUser} setUser={setUser} user={user} />
+                            <Moda_l isEdit={isEdit} showModal={showModal} handleClose={handleClose} showToast={showToast} setShowToast={setShowToast} updateUser={updateUser} setUser={setUserFromApi} user={userFromApi} />
                         </tbody>
                     </table >
                     <MessageTost handleCloseToast={handleCloseToast} showToast={showToast} setShowToast={setShowToast} isEdit={isEdit} />
