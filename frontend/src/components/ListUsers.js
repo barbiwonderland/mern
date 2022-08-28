@@ -4,6 +4,7 @@ import { BiEdit, BiTrash } from "react-icons/bi";
 import { Moda_l } from './Modal';
 import { useNavigate } from 'react-router-dom';
 import { Spinner } from "react-bootstrap";
+import { Searcher } from './Searcher';
 export const ListUsers = () =>
 {
     const [user, setUser] = useState([]);
@@ -11,18 +12,44 @@ export const ListUsers = () =>
     const [updateUser, setUpdateUser] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [show, setShow] = useState(false);
+    const [valueForSearch, setValueForSearch] = useState("");
+    const [userFiltered, setUserFiltered] = useState([]);
+    let navigate = useNavigate();
+
+
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    let navigate = useNavigate();
 
     const handleUsers = async () =>
     {
         await getUsers().then(res => 
         {
             setUser(res.data);
+            setUserFiltered(res.data);
             setIsLoading(false);
         });
     };
+
+
+    const FilterByCategory = (value) =>
+    {
+        // si el input no esta vacio..
+        if (value !== '')
+        {
+            // filtro los elementos que incluyen el valor por nombre o nickname
+            const result = user.filter(
+                user => user.username.includes(value) || user.nickname.includes(value)
+            );
+            // se modifica el segundo array con los datos originales
+            setUserFiltered(result);
+        } else
+        {
+            // sino vuelvo a cargar la lista de filstrados con el array original usuarios
+            setUserFiltered(user);
+        }
+
+    };
+
     // En el use effect si pasamos por parametro la variable users, se crea un loop eterno, 
     //porque en el primer renderizado detecta el cambio dentro de handleUsers funcion de "user",
     //entonces vuelve a ejecutar el useeffect infinitas veces
@@ -31,6 +58,14 @@ export const ListUsers = () =>
         handleUsers();
 
     }, []);
+
+    useEffect(() =>
+    {
+        FilterByCategory(valueForSearch);
+    }, [valueForSearch]);
+
+
+
 
     const handleDelete = (userForDelete) =>
     {
@@ -51,7 +86,7 @@ export const ListUsers = () =>
         isLoading ? <div className='justify-content-center d-flex align-items-center height-100 '><Spinner animation="border" variant="info" size="lg" className="spinner-size" /></div> :
             user.length > 0 ?
                 <>
-
+                    <Searcher setValueForSearch={setValueForSearch} />
                     <table className="table table-striped text-center" >
                         <thead>
                             <tr>
@@ -64,7 +99,7 @@ export const ListUsers = () =>
                         </thead>
                         <tbody>
 
-                            {user && user.map((user) =>
+                            {userFiltered && userFiltered.map((user) =>
                                 <React.Fragment key={user._id}>
                                     <tr key={user._id}>
                                         <td>{user.nickname}</td>
