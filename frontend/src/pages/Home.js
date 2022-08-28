@@ -10,7 +10,7 @@ export const Home = () =>
     return (
         <>
             <div className="backgroundHome text-center ">
-                <h3 className='text-center'> <span className='text-white border-bottom  border-2'>¡Bienvenido!</span></h3>
+                <h3 className='text-center pt-5'> <span className='text-white border-bottom  border-2'>¡Bienvenido!</span></h3>
                 <button onClick={handleShow} type="button" className=" mt-5 btn btn-dark" data-toggle="modal" data-target="#exampleModal">
                     Agregar usuario
                 </button>
