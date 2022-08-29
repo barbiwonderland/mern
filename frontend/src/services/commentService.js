@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const urlBackend="httpCommentsmern.herokuapp.com"
+const urlBackend="https://usersmern.herokuapp.com"
 
 export const getComments = async () =>
 {
