@@ -16,7 +16,7 @@ router.route('/add').post((req, res) =>
     // Guardo toda la información en un objeto de tipo User 
     const newUser = new User({   // Guardo los datos que ingresa el usuario en variables
         username: req.body.username,
-        nickname: (req.body.nickname),
+        name: (req.body.name),
         age: Number(req.body.age)
     });
 
@@ -49,7 +49,7 @@ router.route('/update/:id').post((req, res) =>
         .then(user =>
         {
             user.username = req.body.username;
-            user.nickname = req.body.nickname;
+            user.name = req.body.name;
             user.age = Number(req.body.age);
 
             user.save()

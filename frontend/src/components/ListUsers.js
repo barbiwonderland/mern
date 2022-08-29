@@ -41,11 +41,11 @@ export const ListUsers = () =>
         // si el input no esta vacio..
         if (value !== '')
         {
-            // filtro los elementos que incluyen el valor por nombre o nickname
+            // filtro los elementos que incluyen el valor por nombre o name
             // paso los valores que ingresa el usuario a lowercase para unificar
             value = value.toLowerCase();
             const result = userFromApi.filter(
-                user => user.username.toLowerCase().includes(value) || user.nickname.toLowerCase().includes(value)
+                user => user.username.toLowerCase().includes(value) || user.name.toLowerCase().includes(value)
             );
             // se modifica el segundo array con los datos originales
             setUserFiltered(result);
@@ -93,7 +93,7 @@ export const ListUsers = () =>
         setUpdateUser(userEdited);
         // pongo el true el estado de edición
         setIsEdit(true);
-        // pongo la ventana modal en true
+        // pongo la ventana modal
         handleShow();
     };
     return (
@@ -117,7 +117,7 @@ export const ListUsers = () =>
                             {userFiltered && userFiltered.map((user) =>
                                 <React.Fragment key={user._id}>
                                     <tr key={user._id}>
-                                        <td>{user.nickname}</td>
+                                        <td>{user.name}</td>
                                         <td>{user.username}</td>
                                         <td>{user.age}</td>
                                         <td onClick={() => handleEdit(user)} ><BiEdit /></td>

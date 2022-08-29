@@ -28,7 +28,7 @@ export const AddOrEdit = ({ isEdit, updateUser, handleClose, setUser, user, setS
         }
         return error;
     };
-    const validateNickName = value =>
+    const validatename = value =>
     {
         let error;
         if (!value)
@@ -57,8 +57,8 @@ export const AddOrEdit = ({ isEdit, updateUser, handleClose, setUser, user, setS
             <Formik
 
                 initialValues={isEdit ? {
-                    username: updateUser.username, nickname: updateUser.nickname, age: updateUser.age
-                } : { username: "", nickname: "", age: "" }
+                    username: updateUser.username, name: updateUser.name, age: updateUser.age
+                } : { username: "", name: "", age: "" }
                 }
                 onSubmit={(values, { setSubmitting }) =>
                 {
@@ -77,7 +77,7 @@ export const AddOrEdit = ({ isEdit, updateUser, handleClose, setUser, user, setS
                         const objIndex = usersEdited.findIndex((obj => obj._id == id));
                         // Modifico directamente el elemento que quiero modificar a través del index
                         usersEdited[objIndex].username = values.username;
-                        usersEdited[objIndex].nickname = values.nickname;
+                        usersEdited[objIndex].name = values.name;
                         usersEdited[objIndex].age = values.age;
                         // Modifico el estado user con userEdited
                         setUser(usersEdited);
@@ -102,18 +102,18 @@ export const AddOrEdit = ({ isEdit, updateUser, handleClose, setUser, user, setS
                                     name="username"
                                     className="form-control "
                                     placeholder="Username"
-                                    validate={validateNickName}
+                                    validate={validatename}
                                 />
                                 {errors.username && touched.username && errorMessage(errors.username)}
 
                                 <Field
                                     className="form-control mt-2"
                                     type="text"
-                                    placeholder="Nickname"
-                                    name="nickname"
+                                    placeholder="name"
+                                    name="name"
                                     validate={validateUserName}
                                 />
-                                {errors.nickname && touched.nickname && errorMessage(errors.nickname)}
+                                {errors.name && touched.name && errorMessage(errors.name)}
                                 <Field
                                     className="form-control  mt-2"
                                     type="number"
