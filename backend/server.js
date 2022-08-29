@@ -5,11 +5,11 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 const app = express();
-// const bodyParser = require('body-parser');
-// app.use(bodyParser.urlencoded({
-//     extended: false
-// }));
-// app.use(bodyParser.json());
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
+app.use(bodyParser.json());
 const port = process.env.PORT || 3000;
 
 // LE DIGO A LA API QUE USE CORS
@@ -34,9 +34,12 @@ connection.once('open', () =>
 
 //RUTAS CREADAS PARA LA API
 const usersRouter = require('./routes/user');
+const commentsRouter = require('./routes/comment');
 
 // LE DIGO A LA API QUE USE LAS RUTAS DECLARADAS EN EL PASO ANTERIOR
 app.use('/users', usersRouter);
+app.use('/comments', commentsRouter);
+
 // Habilitar conexión ....
 const host = '0.0.0.0';
 //PARA SABER EN QUE PUERTO ESTOY CONECTADO
