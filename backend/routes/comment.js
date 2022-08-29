@@ -8,7 +8,12 @@ router.route('/').get((req, res) =>
         .then(comments => res.json(comments))
         .catch(err => res.status(400).json('Error: ' + err));
 });
-
+// Me devuelve solamente el comentario de un  determinado usuario
+router.route('/:id').get((req, res) =>
+{
+    const query = Comment.find({ userId: req.params.id }).then(comments => res.json(comments))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
 router.route('/add/:id').post((req, res) =>
 {
     // Guardo toda la información , el id que esta en params es del usuario que va a crear el comentario
@@ -31,14 +36,8 @@ router.route('/:id').get((req, res) =>
         .then(comment => res.json(comment))
         .catch(err => res.status(400).json('Error: ' + err));
 });
-// Get speific id
 
-router.route('/?postId=:id').get((req, res) =>
-{
-    Comment.findById(req.params.id)
-        .then(comment => res.json(comment))
-        .catch(err => res.status(400).json('Error: ' + err));
-});
+
 
 router.route('/:id').delete((req, res) =>
 {
