@@ -3,7 +3,7 @@ import { Formik, Form, Field } from "formik";
 import { addUser, EditUser } from '../services/userService';
 import { useParams } from 'react-router-dom';
 
-export const AddOrEdit = ({ isEdit, updateUser, handleClose, setUser, user, setShowToast, toastMessage }) =>
+export const FormAddOrEditUsers = ({ isEdit, updateUser, handleClose, setUser, user, setShowToast, toastMessage }) =>
 {
 
     const { id } = useParams();

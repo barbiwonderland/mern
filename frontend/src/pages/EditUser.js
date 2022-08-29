@@ -1,5 +1,5 @@
 import React from 'react';
-import { AddOrEdit } from '../components/AddOrEdit';
+import { FormAddOrEditUsers } from '../components/FormAddOrEditUsers';
 
 export const EditUser = ({ edit }) =>
 {
@@ -17,7 +17,7 @@ export const EditUser = ({ edit }) =>
 
                         </div>
                         <div className="modal-body">
-                            <AddOrEdit edit={edit} />
+                            <FormAddOrEditUsers edit={edit} />
                         </div>
 
                     </div>

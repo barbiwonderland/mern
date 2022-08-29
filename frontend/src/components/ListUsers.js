@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getUsers, deleteUser } from "../services/userService";
-import { BiEdit, BiTrash } from "react-icons/bi";
+import { BiEdit, BiTrash, BiMessageRoundedAdd } from "react-icons/bi";
 import { Moda_l } from './Modal';
 import { useNavigate } from 'react-router-dom';
 import { Spinner } from "react-bootstrap";
@@ -101,39 +101,46 @@ export const ListUsers = () =>
         isLoading ? <div className='justify-content-center d-flex align-items-center height-100 '><Spinner animation="border" variant="info" size="lg" className="spinner-size" /></div> :
             userFromApi.length > 0 ?
                 <>
-                    <Searcher setValueForSearch={setValueForSearch} />
-                    <table className="table table-striped text-center" >
-                        <thead>
-                            <tr>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Usuario</th>
-                                <th scope="col">Edad</th>
-                                <th scope="col">Editar</th>
-                                <th scope="col">Eliminar</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                    <div className="container-fluid">
+                        <Searcher setValueForSearch={setValueForSearch} />
+                        <div className="row">
+                            <div className="col-sm-12 table-responsive">
+                                <table className="table table-striped text-center table-sm" >
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col">Usuario</th>
+                                            <th scope="col">Edad</th>
+                                            <th scope="col">Comentar</th>
+                                            <th scope="col">Editar</th>
+                                            <th scope="col">Eliminar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
 
-                            {userFiltered && userFiltered.map((user) =>
-                                <React.Fragment key={user._id}>
-                                    <tr key={user._id}>
-                                        <td>{user.name}</td>
-                                        <td>{user.username}</td>
-                                        <td>{user.age}</td>
-                                        <td onClick={() => handleEdit(user)} ><BiEdit /></td>
-                                        <td
-                                            onClick={() => handleDelete(user._id)}><BiTrash /></td>
-                                    </tr>
-                                </React.Fragment>
+                                        {userFiltered && userFiltered.map((user) =>
+                                            <React.Fragment key={user._id}>
+                                                <tr key={user._id}>
+                                                    <td>{user.name}</td>
+                                                    <td>{user.username}</td>
+                                                    <td>{user.age}</td>
+                                                    <td  ><BiMessageRoundedAdd /></td>
+                                                    <td onClick={() => handleEdit(user)} ><BiEdit /></td>
+                                                    <td
+                                                        onClick={() => handleDelete(user._id)}><BiTrash /></td>
+                                                </tr>
+                                            </React.Fragment>
 
 
-                            )}
+                                        )}
 
-                            <Moda_l isEdit={isEdit} showModal={showModal} handleClose={handleClose} showToast={showToast} setShowToast={setShowToast} updateUser={updateUser} setUser={setUserFromApi} user={userFromApi} />
-                        </tbody>
-                    </table >
-                    <MessageTost handleCloseToast={handleCloseToast} showToast={showToast} setShowToast={setShowToast} isEdit={isEdit} />
-
+                                        <Moda_l isEdit={isEdit} showModal={showModal} handleClose={handleClose} showToast={showToast} setShowToast={setShowToast} updateUser={updateUser} setUser={setUserFromApi} user={userFromApi} />
+                                    </tbody>
+                                </table >
+                                <MessageTost handleCloseToast={handleCloseToast} showToast={showToast} setShowToast={setShowToast} isEdit={isEdit} />
+                            </div>
+                        </div>
+                    </div>
                 </>
 
                 :
