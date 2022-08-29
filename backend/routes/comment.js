@@ -31,7 +31,14 @@ router.route('/:id').get((req, res) =>
         .then(comment => res.json(comment))
         .catch(err => res.status(400).json('Error: ' + err));
 });
+// Get speific id
 
+router.route('/?postId=:id').get((req, res) =>
+{
+    Comment.findById(req.params.id)
+        .then(comment => res.json(comment))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
 
 router.route('/:id').delete((req, res) =>
 {
