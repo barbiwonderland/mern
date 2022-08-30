@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { getUsers, deleteUser } from "../services/userService";
 import { BiEdit, BiTrash, BiMessageRoundedAdd } from "react-icons/bi";
-import { Moda_l } from './Modal';
 import { useNavigate } from 'react-router-dom';
 import { Spinner } from "react-bootstrap";
 import { Searcher } from './Searcher';
 import MessageTost from './MessageTost';
+import { FormAddOrEditUsers } from './FormAddOrEditUsers';
 export const ListUsers = () =>
 {
     const [userFromApi, setUserFromApi] = useState([]);
@@ -13,7 +13,7 @@ export const ListUsers = () =>
     const [updateUser, setUpdateUser] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [showToast, setShowToast] = useState(false);
-    const [showModal, setShowModal] = useState(false);
+    const [editModal, setEditModal] = useState(false);
     const [valueForSearch, setValueForSearch] = useState("");
     const [userFiltered, setUserFiltered] = useState([]);
     let message = "";
@@ -21,8 +21,7 @@ export const ListUsers = () =>
     let navigate = useNavigate();
 
 
-    const handleClose = () => setShowModal(false);
-    const handleShow = () => setShowModal(true);
+    const handleClose = () => setEditModal(false);
     const handleCloseToast = () => setShowToast(false);
 
     const handleUsers = async () =>
@@ -93,8 +92,12 @@ export const ListUsers = () =>
         setUpdateUser(userEdited);
         // pongo el true el estado de edición
         setIsEdit(true);
-        // pongo la ventana modal
-        handleShow();
+        setEditModal(true);
+    };
+    const handleComments = (id) =>
+    {
+        navigate(`/comments/${id}`);
+
     };
     return (
 
@@ -124,7 +127,7 @@ export const ListUsers = () =>
                                                     <td>{user.name}</td>
                                                     <td>{user.username}</td>
                                                     <td>{user.age}</td>
-                                                    <td  ><BiMessageRoundedAdd /></td>
+                                                    <td onClick={() => handleComments(user._id)} ><BiMessageRoundedAdd /></td>
                                                     <td onClick={() => handleEdit(user)} ><BiEdit /></td>
                                                     <td
                                                         onClick={() => handleDelete(user._id)}><BiTrash /></td>
@@ -133,8 +136,7 @@ export const ListUsers = () =>
 
 
                                         )}
-
-                                        <Moda_l isEdit={isEdit} showModal={showModal} handleClose={handleClose} showToast={showToast} setShowToast={setShowToast} updateUser={updateUser} setUser={setUserFromApi} user={userFromApi} />
+                                        <FormAddOrEditUsers show={editModal} userFiltered={userFiltered} setUserFiltered={setUserFiltered} isEdit={isEdit} updateUser={updateUser} setShowToast={setShowToast} handleClose={handleClose} />
                                     </tbody>
                                 </table >
                                 <MessageTost handleCloseToast={handleCloseToast} showToast={showToast} setShowToast={setShowToast} isEdit={isEdit} />

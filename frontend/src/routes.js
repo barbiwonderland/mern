@@ -1,11 +1,9 @@
 import React from 'react';
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { Home } from './pages/Home';
 import { Users } from './pages/Users';
 import { Layout } from "./components/Layout";
-import { FormAddOrEditUsers } from './components/FormAddOrEditUsers';
-import { EditUser } from './pages/EditUser';
-import { Comments } from './components/Comments';
+import { UserComments } from './pages/UserComments';
 export const MainRoutes = () =>
 {
     return (
@@ -15,8 +13,7 @@ export const MainRoutes = () =>
                     <Route exact path="/" element={<Home />} />
                     <Route path="/users" element={<Users />} />
                     <Route path="/users/:id" element={<Users />} />
-                    <Route path="/comments" element={<Comments />} />
-                    <Route path="/comments/:id" element={<Comments />} />
+                    <Route path="/comments/:id" element={<UserComments />} />
 
 
                 </Routes>

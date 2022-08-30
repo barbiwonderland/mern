@@ -1,18 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
-import { FormAddOrEditUsers } from './FormAddOrEditUsers';
-
-export function Moda_l({ showModal, handleClose, isEdit, updateUser, setUser, user, setShowToast, messageToast })
+export function Moda_l({ children, show, handleClose })
 {
-
-
     return (
         <>
-            <Modal centered keyboard show={showModal} onHide={handleClose}>
+
+            <Modal centered keyboard show={show} onHide={handleClose} >
                 <Modal.Header closeButton >
-                    <Modal.Title className=' mx-auto'>{isEdit ? "Editar Usuario" : "Agregar usuario"} </Modal.Title>
                 </Modal.Header>
-                <Modal.Body> <FormAddOrEditUsers messageToast={messageToast} setShowToast={setShowToast} isEdit={isEdit} updateUser={updateUser} handleClose={handleClose} user={user} setUser={setUser} /></Modal.Body>
+                <Modal.Body> {children}</Modal.Body>
             </Modal>
         </>
     );
