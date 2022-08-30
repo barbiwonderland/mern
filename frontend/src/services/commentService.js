@@ -7,7 +7,7 @@ export const getComments = async () =>
   return axios.get(`${urlBackend}/comments`);
 };
 // Le tengo que pasar el id cuando llame la función
-export const getUserComments = async (id) =>
+export const GetUserComments = async (id) =>
 {
 
   return axios.get(`${urlBackend}/comments/${id}`);
@@ -21,7 +21,7 @@ export const deleteComment = (id) =>
 export const AddComment = (newComment,id) =>
 
   {
-    axios.post(`${urlBackend}/comments/add/${id}`, newComment).then(res => console.log(res.data));
+    axios.post(`${urlBackend}/comments/add/${id}`, newComment).then(res =>console.log( (JSON.stringify(res.data))));
 
   };
 

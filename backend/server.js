@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 app.use(bodyParser.json());
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 
 // LE DIGO A LA API QUE USE CORS
 app.use(cors());

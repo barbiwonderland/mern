@@ -19,14 +19,15 @@ router.route('/add/:id').post((req, res) =>
     // Guardo toda la información , el id que esta en params es del usuario que va a crear el comentario
     const newComment = new Comment({   // Guardo los datos que ingresa el usuario en variables
         comment: req.body.comment,
-        userId: (req.params.id)
+        userId: (req.params.id),
+        date: new Date().toLocaleString()
 
     });
 
     // ACTUALIZO LOS DATOS EN LA API CON EL USUARIO CREADO EN EL PASO ANTERIOR
     // . save , .find etc  viene de mongoose 
     newComment.save()
-        .then(() => res.json('comment added!'))
+        .then((newComment) => res.json(`comment added! ${newComment}`))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
