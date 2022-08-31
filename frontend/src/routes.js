@@ -14,6 +14,7 @@ export const MainRoutes = () =>
                     <Route path="/users" element={<Users />} />
                     <Route path="/users/:id" element={<Users />} />
                     <Route path="/comments/:id" element={<UserComments />} />
+                    <Route path="comments/update/:id" element={<UserComments />} />
 
 
                 </Routes>

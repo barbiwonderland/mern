@@ -25,7 +25,7 @@ router.route('/add').post((req, res) =>
     newUser.save()
         .then(() => res.json('User added!'))
         .catch(err => res.status(400).json('Error: ' + err));
-});
+})
 
 // REQ PARAMS ID LO ENCUENTRA EXPRESS , REQUEST ES LO QUE LE LLEGA DEL CLIENTE AL SERVIDOR , Y RESP ES RESPUESTA 
 router.route('/:id').get((req, res) =>

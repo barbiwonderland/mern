@@ -1,5 +1,5 @@
 import axios from "axios";
-const urlBackend = "https://usersmern.herokuapp.com";
+  const urlBackend = "https://usersmern.herokuapp.com";
 
 export const getComments = async () =>
 {
@@ -18,18 +18,19 @@ export const deleteComment = (id) =>
   axios.delete(`${urlBackend}/comments/${id}`);
 
 };
-export const AddComment = (newComment,id) =>
+export const addComment  = async(newComment,id) =>
 
   {
-    axios.post(`${urlBackend}/comments/add/${id}`, newComment).then(res =>console.log( (JSON.stringify(res.data))));
+    // lo retorno porque quiero que me traiga algo
+   return await axios.post(`${urlBackend}/comments/add/${id}`, newComment)
 
   };
 
   export const EditComment = (updateComment, id) =>
 {
+    // lo retorno porque quiero que me traiga algo
 
-    axios.post(`${urlBackend}/comments/update/${id}`, updateComment)
-      .then(res => console.log(res.data));
+   return axios.post(`${urlBackend}/comments/update/${id}`, updateComment)
 
   };
 

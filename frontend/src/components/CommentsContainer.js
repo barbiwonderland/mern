@@ -1,22 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { Card } from 'react-bootstrap';
 import { BiTrash, BiPencil } from "react-icons/bi";
+import { useNavigate } from 'react-router-dom';
 import { deleteComment } from '../services/commentService';
-export const Comments = ({ id, comments, createdAt, setCommentsFromApi, commentsFromApi, setModalComments, setIsEdit, setValue, setUpdateUser }) =>
+export const CommentsContainer = ({ commentId, userComment, createdAt, setCommentsFromApi,
+    commentsFromApi, setModalComments, setIsEdit, setInputOfCommentsValue }) =>
 {
+    const navigate = useNavigate();
 
-    const handleDelete = (id) =>
+
+    const handleDelete = (commentId) =>
     {
-        deleteComment(id);
-        const commentfiltered = commentsFromApi.filter((comment) => comment._id !== id);
+        deleteComment(commentId);
+        const commentfiltered = commentsFromApi.filter((comment) => comment._id !== commentId);
         console.log(commentfiltered);
         setCommentsFromApi(commentfiltered);
     };
-    const handleEdit = (id, comment) =>
+    const handleEdit = (commentId, userComment) =>
     {
+        navigate(`/comments/update/${commentId}`);
         setIsEdit(true);
-        setValue(comments);
-        setUpdateUser({ id: id, comment: comment });
+        setInputOfCommentsValue(userComment);
         // abro el form modal para editar
         setModalComments(true);
 
@@ -27,14 +31,14 @@ export const Comments = ({ id, comments, createdAt, setCommentsFromApi, comments
     return (
         <Card>
             <Card.Header> <div className='d-flex justify-content-end gap-2'>
-                <BiPencil onClick={() => handleEdit(id, comments)} />
-                <BiTrash onClick={() => handleDelete(id)} />
+                <BiPencil onClick={() => handleEdit(commentId, userComment)} />
+                <BiTrash onClick={() => handleDelete(commentId)} />
             </div>
             </Card.Header>
             <Card.Body>
                 <blockquote className="blockquote mb-0">
                     <p>
-                        {comments}
+                        {userComment}
                     </p>
                     <footer className="blockquote-footer">
                         <cite title="Source Title">{(createdAt)}</cite>

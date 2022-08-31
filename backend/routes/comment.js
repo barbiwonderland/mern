@@ -11,7 +11,7 @@ router.route('/').get((req, res) =>
 // Me devuelve solamente el comentario de un  determinado usuario
 router.route('/:id').get((req, res) =>
 {
-    const query = Comment.find({ userId: req.params.id }).then(comments => res.json(comments))
+    Comment.find({ userId: req.params.id }).then(comments => res.json(comments))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 router.route('/add/:id').post((req, res) =>
@@ -27,7 +27,8 @@ router.route('/add/:id').post((req, res) =>
     // ACTUALIZO LOS DATOS EN LA API CON EL USUARIO CREADO EN EL PASO ANTERIOR
     // . save , .find etc  viene de mongoose 
     newComment.save()
-        .then((newComment) => res.json(`comment added! ${newComment}`))
+        // Una vez que se guarda quiero que me retorne el objeto que se subio a la base datos...
+        .then((newComment) => res.json(newComment))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
@@ -54,10 +55,11 @@ router.route('/update/:id').post((req, res) =>
         .then(comment =>
         {
             comment.comment = req.body.comment,
-                comment.userId = (req.params.id);
+                comment.date = new Date().toLocaleString();
 
             comment.save()
-                .then(() => res.json('comment updated!'))
+                // Una vez que se guarda quiero que me retorne el objeto que se subio a la base datos...
+                .then((comment) => res.json(comment))
                 .catch(err => res.status(400).json('Error: ' + err));
         })
         .catch(err => res.status(400).json('Error: ' + err));

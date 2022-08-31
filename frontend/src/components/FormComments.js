@@ -1,39 +1,41 @@
 import React, { useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
-import { AddComment, EditComment } from '../services/commentService';
+import { addComment, EditComment } from '../services/commentService';
 import { Moda_l } from './Modal';
-import { useParams } from 'react-router-dom';
-export const FormComments = ({ updateUser, modalComments, handleClose, commentsFromApi, setCommentsFromApi, isEdit, setValue, value }) =>
+import { useNavigate, useParams } from 'react-router-dom';
+export const FormComments = ({ modalComments, handleClose, commentsFromApi,
+    setCommentsFromApi, isEdit, setInputOfCommentsValue, inputOfCommentsValue }) =>
 {
     const { id } = useParams();
+    let navigate = useNavigate();
+    const [commentUpdatedFromBd, setCommentUpdatedFromBd] = useState("pepe");
 
-
-
-    const handleAddOfComment = (e) =>
+    const handleAddOrEdit = (e) =>
     {
+
         e.preventDefault();
         if (isEdit)
         {
             const newComment = {
-                comment: value,
-                _id: updateUser.id
-
+                comment: inputOfCommentsValue,
             };
             console.log(newComment);
-            // EditComment(newComment, id);
-            // se va a guardar momentaneamente sin el id
-            newComment.date = "Justo ahora";
+            EditComment(newComment, id).then((res) => console.log(res.data));
+            navigate(-1);
+            //agregar navegar url anterior
+            handleClose();
         } else
         {
-            const newComment = {
-                comment: value,
+            let newComment = {
+                comment: inputOfCommentsValue,
 
             };
-            AddComment(newComment, id);
+            addComment(newComment, id).then((res) =>
+            {
+                setCommentUpdatedFromBd(res.data);
+
+            });
             // se va a guardar momentaneamente sin el id
-            newComment.date = "Justo ahora";
-            const newArrayComments = [...commentsFromApi, newComment];
-            setCommentsFromApi(newArrayComments);
             handleClose();
 
         }
@@ -43,10 +45,10 @@ export const FormComments = ({ updateUser, modalComments, handleClose, commentsF
     return (
         <>
             <Moda_l show={modalComments} handleClose={handleClose} >
-                <Form onSubmit={handleAddOfComment} className=" text-center">
+                <Form onSubmit={handleAddOrEdit} className=" text-center">
                     <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                         <Form.Label>{isEdit ? "Editar comentario" : "Nuevo Comentario"}</Form.Label>
-                        <Form.Control as="textarea" rows={3} placeholder={value} onChange={e => setValue(e.target.value)} />
+                        <Form.Control as="textarea" rows={3} value={inputOfCommentsValue} onChange={e => setInputOfCommentsValue(e.target.value)} />
                     </Form.Group>
                     <button className="btn btn-dark mt-2 d-flex mx-auto  " type="submit" >
                         {isEdit ? "Editar " : "Agregar"}

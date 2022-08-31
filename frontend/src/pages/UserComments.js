@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Button, Spinner } from 'react-bootstrap';
-import { deleteComment, GetUserComments } from "../services/commentService";
+import { GetUserComments } from "../services/commentService";
 import { useParams } from 'react-router-dom';
-import { Comments } from '../components/Comments';
+import { CommentsContainer } from '../components/CommentsContainer';
 import { FormComments } from '../components/FormComments';
 
 export const UserComments = () =>
@@ -13,7 +13,7 @@ export const UserComments = () =>
     const [isEdit, setIsEdit] = useState(false);
     const [updateUser, setUpdateUser] = useState([]);
     // value of input comments
-    const [value, setValue] = useState('');
+    const [inputOfCommentsValue, setInputOfCommentsValue] = useState('');
 
     let { id } = useParams();
 
@@ -25,19 +25,18 @@ export const UserComments = () =>
     };
     useEffect(() =>
     {
+        // Me traigo todos los comentarios de la api en el primer renderizado
         const handleComments = async () =>
         {
 
             await GetUserComments(id).then(res =>
             {
                 setCommentsFromApi(res.data);
-                console.log(res.data);
                 setIsLoading(false);
             }
             );
         };
         handleComments();
-        console.log("hola");
     }, []);
 
     return (
@@ -47,13 +46,30 @@ export const UserComments = () =>
                 <div className="container">
                     <div className="row">
                         <div className="col-md-">
-                            <Button onClick={() => { setModalComments(true); setIsEdit(false); setValue(""); }} variant="dark" className='my-3 d-flex mx-auto' >Agregar comentario</Button>
-                            <FormComments setValue={setValue} value={value} updateUser={updateUser} setUpdatedUser={setUpdateUser} isEdit={isEdit} setIsEdit={setIsEdit} commentsFromApi={commentsFromApi} setCommentsFromApi={setCommentsFromApi} modalComments={modalComments} handleClose={handleClose} />
+                            <Button onClick={() => { setModalComments(true); setIsEdit(false); setInputOfCommentsValue(""); }} variant="dark" className='my-3 d-flex mx-auto' >Agregar comentario</Button>
+                            {/* /* /*Formulario Modal para editar comentarios */}
+                            <FormComments
+                                setInputOfCommentsValue={setInputOfCommentsValue}
+                                inputOfCommentsValue={inputOfCommentsValue}
+                                isEdit={isEdit}
+                                setIsEdit={setIsEdit}
+                                commentsFromApi={commentsFromApi}
+                                setCommentsFromApi={setCommentsFromApi}
+                                modalComments={modalComments}
+                                handleClose={handleClose} />
                             {commentsFromApi.length > 0 ?
                                 <>
                                     {commentsFromApi.map(({ comment, _id, date }) => (
 
-                                        <Comments setValue={setValue} setUpdateUser={setUpdateUser} setIsEdit={setIsEdit} setModalComments={setModalComments} handleClose={handleClose} commentsFromApi={commentsFromApi} setCommentsFromApi={setCommentsFromApi} comments={comment} id={_id} createdAt={date} />
+                                        <CommentsContainer
+                                            setInputOfCommentsValue={setInputOfCommentsValue}
+                                            setIsEdit={setIsEdit}
+                                            setModalComments={setModalComments}
+                                            commentsFromApi={commentsFromApi}
+                                            setCommentsFromApi={setCommentsFromApi}
+                                            userComment={comment}
+                                            commentId={_id}
+                                            createdAt={date} />
                                     ))}
                                 </>
                                 :
