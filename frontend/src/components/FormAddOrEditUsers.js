@@ -19,7 +19,7 @@ export const FormAddOrEditUsers = ({ isEdit, updateUser, setUserFiltered, userFi
     {
         return <div className="invalid-feedback">{error}</div>;
     };
-    const validateUserName = value =>
+    const validateUserEmail = value =>
     {
         let error;
         if (!value)
@@ -60,14 +60,15 @@ export const FormAddOrEditUsers = ({ isEdit, updateUser, setUserFiltered, userFi
                 <Formik
 
                     initialValues={isEdit ? {
-                        username: updateUser.username, name: updateUser.name, age: updateUser.age
-                    } : { username: "", name: "", age: "" }
+                        email: updateUser.email, name: updateUser.name, age: updateUser.age
+                    } : { email: "", name: "", age: "" }
                     }
                     onSubmit={(values, { setSubmitting }) =>
                     {
                         if (!isEdit)
                         {
-                            addUser(values);
+                            console.log(values, "valores a agregar");
+                            addUser(values).then(res => console.log(res.data, "hjhajahaka"));
                             setShowToast(true);
                             handleClose();
 
@@ -79,7 +80,7 @@ export const FormAddOrEditUsers = ({ isEdit, updateUser, setUserFiltered, userFi
                             // Encuentro el indice del elemento de usuarios que quiero modificar
                             const objIndex = usersEdited.findIndex((obj => obj._id == id));
                             // Modifico directamente el elemento que quiero modificar a través del index
-                            usersEdited[objIndex].username = values.username;
+                            usersEdited[objIndex].email = values.email;
                             usersEdited[objIndex].name = values.name;
                             usersEdited[objIndex].age = values.age;
                             // Modifico el estado user con userEdited
@@ -102,19 +103,19 @@ export const FormAddOrEditUsers = ({ isEdit, updateUser, setUserFiltered, userFi
                                 <Form className='w-75 '>
                                     <Field
                                         type="text"
-                                        name="username"
+                                        name="email"
                                         className="form-control "
-                                        placeholder="Username"
-                                        validate={validatename}
+                                        placeholder="example@example.com"
+                                        validate={validateUserEmail}
                                     />
-                                    {errors.username && touched.username && errorMessage(errors.username)}
+                                    {errors.email && touched.email && errorMessage(errors.email)}
 
                                     <Field
                                         className="form-control mt-2"
                                         type="text"
                                         placeholder="name"
                                         name="name"
-                                        validate={validateUserName}
+                                        validate={validatename}
                                     />
                                     {errors.name && touched.name && errorMessage(errors.name)}
                                     <Field

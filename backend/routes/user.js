@@ -15,17 +15,19 @@ router.route('/add').post((req, res) =>
 
     // Guardo toda la información en un objeto de tipo User 
     const newUser = new User({   // Guardo los datos que ingresa el usuario en variables
-        username: req.body.username,
+        email: req.body.email,
         name: (req.body.name),
-        age: Number(req.body.age)
+        age: Number(req.body.age),
+        // genero id yo
+        id: 12345
     });
 
     // ACTUALIZO LOS DATOS EN LA API CON EL USUARIO CREADO EN EL PASO ANTERIOR
     // . save , .find etc  viene de mongoose 
     newUser.save()
-        .then(() => res.json('User added!'))
+        .then(() => res.json(newUser))
         .catch(err => res.status(400).json('Error: ' + err));
-})
+});
 
 // REQ PARAMS ID LO ENCUENTRA EXPRESS , REQUEST ES LO QUE LE LLEGA DEL CLIENTE AL SERVIDOR , Y RESP ES RESPUESTA 
 router.route('/:id').get((req, res) =>
@@ -48,7 +50,7 @@ router.route('/update/:id').post((req, res) =>
     User.findById(req.params.id)
         .then(user =>
         {
-            user.username = req.body.username;
+            user.email = req.body.email;
             user.name = req.body.name;
             user.age = Number(req.body.age);
 

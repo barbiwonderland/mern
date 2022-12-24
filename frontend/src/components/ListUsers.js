@@ -30,6 +30,7 @@ export const ListUsers = () =>
         {
             setUserFromApi(res.data);
             setUserFiltered(res.data);
+            console.log(res.data);
             setIsLoading(false);
         });
     };
@@ -44,7 +45,7 @@ export const ListUsers = () =>
             // paso los valores que ingresa el usuario a lowercase para unificar
             value = value.toLowerCase();
             const result = userFromApi.filter(
-                user => user.username.toLowerCase().includes(value) || user.name.toLowerCase().includes(value)
+                user => user.email.toLowerCase().includes(value) || user.email.toLowerCase().includes(value)
             );
             // se modifica el segundo array con los datos originales
             setUserFiltered(result);
@@ -125,7 +126,7 @@ export const ListUsers = () =>
                                             <React.Fragment key={user._id}>
                                                 <tr key={user._id}>
                                                     <td>{user.name}</td>
-                                                    <td>{user.username}</td>
+                                                    <td>{user.email}</td>
                                                     <td>{user.age}</td>
                                                     <td onClick={() => handleComments(user._id)} ><BiMessageRoundedAdd /></td>
                                                     <td onClick={() => handleEdit(user)} ><BiEdit /></td>

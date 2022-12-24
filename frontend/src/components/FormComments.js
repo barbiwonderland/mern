@@ -8,8 +8,11 @@ export const FormComments = ({ modalComments, handleClose, commentsFromApi,
 {
     const { id } = useParams();
     let navigate = useNavigate();
-    const [commentUpdatedFromBd, setCommentUpdatedFromBd] = useState("pepe");
-
+    const [commentUpdatedFromBd, setCommentUpdatedFromBd] = useState("");
+    useEffect(() =>
+    {
+        console.log("hola");
+    }, [commentUpdatedFromBd]);
     const handleAddOrEdit = (e) =>
     {
 
@@ -28,7 +31,7 @@ export const FormComments = ({ modalComments, handleClose, commentsFromApi,
         {
             let newComment = {
                 comment: inputOfCommentsValue,
-
+                id: 1234
             };
             addComment(newComment, id).then((res) =>
             {
@@ -36,7 +39,11 @@ export const FormComments = ({ modalComments, handleClose, commentsFromApi,
 
             });
             // se va a guardar momentaneamente sin el id
-            handleClose();
+
+
+            handleClose(newComment);
+
+
 
         }
 

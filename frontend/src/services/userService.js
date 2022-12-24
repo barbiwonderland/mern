@@ -1,7 +1,7 @@
 import axios from "axios";
-
-const urlBackend="https://usersmern.herokuapp.com"
-
+// pasar a variable de entorno
+const urlBackend="https://mern-production-9c77.up.railway.app"
+//const urlBackend="http://localhost:3001"
 export const getUsers = async () =>
 {
 
@@ -16,7 +16,7 @@ export const deleteUser = (id) =>
 
 export const addUser = (newUser) =>
 {
-  axios.post(`${urlBackend}/users/add`, newUser).then(res => console.log(res.data));
+ return axios.post(`${urlBackend}/users/add`, newUser);
 
 };
 

@@ -1,6 +1,6 @@
 import axios from "axios";
-  const urlBackend = "https://usersmern.herokuapp.com";
-
+   const urlBackend = "https://mern-production-9c77.up.railway.app";
+ // const urlBackend = "http://localhost:3001"
 export const getComments = async () =>
 {
 

@@ -18,8 +18,9 @@ export const UserComments = () =>
     let { id } = useParams();
 
 
-    const handleClose = () =>
+    const handleClose = (newComment) =>
     {
+        console.log(newComment);
         setModalComments(false);
 
     };
@@ -31,6 +32,7 @@ export const UserComments = () =>
 
             await GetUserComments(id).then(res =>
             {
+                
                 setCommentsFromApi(res.data);
                 setIsLoading(false);
             }
