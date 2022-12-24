@@ -18,9 +18,9 @@ router.route('/add').post((req, res) =>
         email: req.body.email,
         name: (req.body.name),
         age: Number(req.body.age),
-        // genero id yo
-        id: 12345
+        id: Date.now()
     });
+
 
     // ACTUALIZO LOS DATOS EN LA API CON EL USUARIO CREADO EN EL PASO ANTERIOR
     // . save , .find etc  viene de mongoose 

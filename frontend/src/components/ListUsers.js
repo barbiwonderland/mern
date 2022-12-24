@@ -113,7 +113,7 @@ export const ListUsers = () =>
                                     <thead>
                                         <tr>
                                             <th scope="col">Nombre</th>
-                                            <th scope="col">Usuario</th>
+                                            <th scope="col">Email</th>
                                             <th scope="col">Edad</th>
                                             <th scope="col">Comentar</th>
                                             <th scope="col">Editar</th>
