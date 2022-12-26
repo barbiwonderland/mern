@@ -4,10 +4,13 @@ import { BiEdit, BiTrash, BiMessageRoundedAdd } from "react-icons/bi";
 import { useNavigate } from 'react-router-dom';
 import { Spinner } from "react-bootstrap";
 import { Searcher } from './Searcher';
+import { useSelector, useDispatch } from 'react-redux';
 import MessageTost from './MessageTost';
 import { FormAddOrEditUsers } from './FormAddOrEditUsers';
+import { fetchUsers } from '../redux/reducers/userSlice';
 export const ListUsers = () =>
 {
+    const dispatch = useDispatch();
     const [userFromApi, setUserFromApi] = useState([]);
     const [isEdit, setIsEdit] = useState(false);
     const [updateUser, setUpdateUser] = useState([]);
@@ -16,23 +19,24 @@ export const ListUsers = () =>
     const [editModal, setEditModal] = useState(false);
     const [valueForSearch, setValueForSearch] = useState("");
     const [userFiltered, setUserFiltered] = useState([]);
+
     let message = "";
 
     let navigate = useNavigate();
 
-
+    const { users, loading } = useSelector((state) => state.users);
+    console.log(users);
     const handleClose = () => setEditModal(false);
     const handleCloseToast = () => setShowToast(false);
 
     const handleUsers = async () =>
     {
-        await getUsers().then(res => 
-        {
-            setUserFromApi(res.data);
-            setUserFiltered(res.data);
-            console.log(res.data);
-            setIsLoading(false);
-        });
+        const rta = dispatch(fetchUsers());
+        setUserFromApi(rta);
+        setUserFiltered(rta);
+        console.log(rta);
+        setIsLoading(false);
+
     };
 
 
@@ -45,7 +49,7 @@ export const ListUsers = () =>
             // paso los valores que ingresa el usuario a lowercase para unificar
             value = value.toLowerCase();
             const result = userFromApi.filter(
-                user => user.email.toLowerCase().includes(value) || user.email.toLowerCase().includes(value)
+                user => user.name.toLowerCase().includes(value) || user.email.toLowerCase().includes(value)
             );
             // se modifica el segundo array con los datos originales
             setUserFiltered(result);
@@ -102,8 +106,8 @@ export const ListUsers = () =>
     };
     return (
 
-        isLoading ? <div className='justify-content-center d-flex align-items-center height-100 '><Spinner animation="border" variant="info" size="lg" className="spinner-size" /></div> :
-            userFromApi.length > 0 ?
+        users.loading ? <div className='justify-content-center d-flex align-items-center height-100 '><Spinner animation="border" variant="info" size="lg" className="spinner-size" /></div> :
+            users.length > 0 ?
                 <>
                     <div className="container-fluid">
                         <Searcher setValueForSearch={setValueForSearch} />
@@ -122,7 +126,7 @@ export const ListUsers = () =>
                                     </thead>
                                     <tbody>
 
-                                        {userFiltered && userFiltered.map((user) =>
+                                        {users && users.map((user) =>
                                             <React.Fragment key={user._id}>
                                                 <tr key={user._id}>
                                                     <td>{user.name}</td>

@@ -6,14 +6,14 @@ import { useNavigate, useParams } from 'react-router-dom';
 export const FormComments = ({ modalComments, handleClose, commentsFromApi,
     setCommentsFromApi, isEdit, setInputOfCommentsValue, inputOfCommentsValue }) =>
 {
+    console.log(commentsFromApi, "comentarios");
     const { id } = useParams();
     let navigate = useNavigate();
     const [commentUpdatedFromBd, setCommentUpdatedFromBd] = useState("");
     useEffect(() =>
     {
-        console.log("hola");
     }, [commentUpdatedFromBd]);
-    const handleAddOrEdit = (e) =>
+    const handleAddOrEdit = (e, commentsFromApi, setCommentsFromApi) =>
     {
 
         e.preventDefault();
@@ -22,29 +22,27 @@ export const FormComments = ({ modalComments, handleClose, commentsFromApi,
             const newComment = {
                 comment: inputOfCommentsValue,
             };
-            console.log(newComment);
+            console.log(newComment, "Nuevo comentario");
             EditComment(newComment, id).then((res) => console.log(res.data));
-            navigate(-1);
-            //agregar navegar url anterior
             handleClose();
+
         } else
         {
             let newComment = {
                 comment: inputOfCommentsValue,
-                id: 1234
+                id: Date.now()
             };
             addComment(newComment, id).then((res) =>
             {
                 setCommentUpdatedFromBd(res.data);
 
             });
-            // se va a guardar momentaneamente sin el id
-
 
             handleClose(newComment);
-
-
-
+            console.log(commentsFromApi);
+            console.log(...commentsFromApi);
+            setCommentsFromApi(...commentsFromApi, newComment);
+            console.log(commentsFromApi);
         }
 
     };
@@ -52,7 +50,7 @@ export const FormComments = ({ modalComments, handleClose, commentsFromApi,
     return (
         <>
             <Moda_l show={modalComments} handleClose={handleClose} >
-                <Form onSubmit={handleAddOrEdit} className=" text-center">
+                <Form onSubmit={(e) => handleAddOrEdit(e, commentsFromApi, setCommentsFromApi)} className=" text-center">
                     <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                         <Form.Label>{isEdit ? "Editar comentario" : "Nuevo Comentario"}</Form.Label>
                         <Form.Control as="textarea" rows={3} value={inputOfCommentsValue} onChange={e => setInputOfCommentsValue(e.target.value)} />

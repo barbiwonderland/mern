@@ -15,6 +15,7 @@ export const CommentsContainer = ({ commentId, userComment, createdAt, setCommen
         const commentfiltered = commentsFromApi.filter((comment) => comment._id !== commentId);
         console.log(commentfiltered);
         setCommentsFromApi(commentfiltered);
+        // eliminar en la base de datos
     };
     const handleEdit = (commentId, userComment) =>
     {
@@ -23,6 +24,8 @@ export const CommentsContainer = ({ commentId, userComment, createdAt, setCommen
         setInputOfCommentsValue(userComment);
         // abro el form modal para editar
         setModalComments(true);
+
+
 
 
 
