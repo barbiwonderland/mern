@@ -26,8 +26,6 @@ export const ListUsers = () => {
 
   const handleUsers = async () => {
     const rta = dispatch(fetchUsers())
-    setUserFromApi(rta)
-    setUserFiltered(rta)
   }
 
   const FilterByCategory = (value) => {
@@ -55,6 +53,10 @@ export const ListUsers = () => {
   useEffect(() => {
     handleUsers()
   }, [])
+  useEffect(() => {
+    setUserFromApi(users)
+    setUserFiltered(users)
+  }, [users])
 
   // llaas a filtrar la busqueda cada vez que el usuario cambia algo en el buscador y cada vez que se elimina
   //definitivamente un usuario en la lista original
@@ -102,7 +104,7 @@ export const ListUsers = () => {
                 </tr>
               </thead>
               <tbody>
-                {userFiltered &&
+                {users &&
                   userFiltered.map((user) => (
                     <React.Fragment key={user._id}>
                       <tr key={user._id}>
