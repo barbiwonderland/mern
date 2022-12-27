@@ -35,10 +35,11 @@ export const commentsSlice = createSlice({
       state.comments = [...state.comments, action.payload]
     },
     editCommentRedux: (state, action) => {
+      console.log(action.payload, "pauoad")
       state.comments = state.comments.map((comment) => {
-        if (comment._id === action.payload.id) {
+        if (comment._id == action.payload._id) {
           // todo lo que esta en comment y todo lo que me pasaron por param del nuevo usser(se modifican solo los campos que se mandan nuevosd y el resto queda igual)
-          return (comment = { ...comment, ...action.payload.comments })
+          return (comment = { ...comment, ...action.payload })
         } else {
           return comment
         }

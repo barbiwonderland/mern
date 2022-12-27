@@ -28,18 +28,19 @@ export const FormComments = ({
     if (isEdit) {
       const newComment = {
         comment: inputOfCommentsValue,
+        _id: id,
       }
       EditComment(newComment, id).then((res) => console.log(res.data))
-      dispatch(editCommentRedux(newComment, id))
+      dispatch(editCommentRedux(newComment))
       handleClose()
     } else {
       let newComment = {
         comment: inputOfCommentsValue,
         date: "05/03/1010",
-        id: Date.now(),
+        userId: Date.now(),
       }
       addComment(newComment, id).then((res) => {
-        dispatch(addCommentRedux(newComment))
+        dispatch(addCommentRedux(res.data))
       })
 
       handleClose(newComment)

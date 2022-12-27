@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom"
 import { deleteUserRedux } from "../redux/reducers/userSlice"
 import { deleteComment } from "../services/commentService"
 import { useDispatch } from "react-redux"
+import { deletecommentRedux } from "../redux/reducers/commentSlice"
 export const CommentsContainer = ({
   commentId,
   userComment,
@@ -20,10 +21,8 @@ export const CommentsContainer = ({
 
   const handleDelete = (commentId) => {
     deleteComment(commentId)
-    const commentfiltered = commentsFromApi.filter(
-      (comment) => comment._id !== commentId
-    )
-    dispatch(deleteUserRedux(commentId))
+    console.log(commentId, "id a borrar")
+    dispatch(deletecommentRedux(commentId))
     // eliminar en la base de datos
   }
   const handleEdit = (commentId, userComment) => {
