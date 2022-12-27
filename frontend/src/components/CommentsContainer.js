@@ -21,7 +21,6 @@ export const CommentsContainer = ({
 
   const handleDelete = (commentId) => {
     deleteComment(commentId)
-    console.log(commentId, "id a borrar")
     dispatch(deletecommentRedux(commentId))
     // eliminar en la base de datos
   }

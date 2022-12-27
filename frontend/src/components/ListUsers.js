@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { getUsers, deleteUser } from "../services/userService"
+import { deleteUser } from "../services/userService"
 import { BiEdit, BiTrash, BiMessageRoundedAdd } from "react-icons/bi"
 import { useNavigate } from "react-router-dom"
 import { Spinner } from "react-bootstrap"
@@ -13,18 +13,14 @@ export const ListUsers = () => {
   const [userFromApi, setUserFromApi] = useState([])
   const [isEdit, setIsEdit] = useState(false)
   const [updateUser, setUpdateUser] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
   const [showToast, setShowToast] = useState(false)
   const [editModal, setEditModal] = useState(false)
   const [valueForSearch, setValueForSearch] = useState("")
   const [userFiltered, setUserFiltered] = useState([])
 
-  let message = ""
-
   let navigate = useNavigate()
 
-  const { users, loading } = useSelector((state) => state.users)
-  console.log(users)
+  const { users } = useSelector((state) => state.users)
   const handleClose = () => setEditModal(false)
   const handleCloseToast = () => setShowToast(false)
 
@@ -32,8 +28,6 @@ export const ListUsers = () => {
     const rta = dispatch(fetchUsers())
     setUserFromApi(rta)
     setUserFiltered(rta)
-    console.log(rta)
-    setIsLoading(false)
   }
 
   const FilterByCategory = (value) => {
@@ -42,7 +36,7 @@ export const ListUsers = () => {
       // filtro los elementos que incluyen el valor por nombre o name
       // paso los valores que ingresa el usuario a lowercase para unificar
       value = value.toLowerCase()
-      const result = userFromApi.filter(
+      const result = users.filter(
         (user) =>
           user.name.toLowerCase().includes(value) ||
           user.email.toLowerCase().includes(value)
@@ -51,7 +45,7 @@ export const ListUsers = () => {
       setUserFiltered(result)
     } else {
       // sino vuelvo a cargar la lista porque quedo seteado con la busqueda anterior que hizo el usuario
-      setUserFiltered(userFromApi)
+      setUserFiltered(users)
     }
   }
 
@@ -108,8 +102,8 @@ export const ListUsers = () => {
                 </tr>
               </thead>
               <tbody>
-                {users &&
-                  users.map((user) => (
+                {userFiltered &&
+                  userFiltered.map((user) => (
                     <React.Fragment key={user._id}>
                       <tr key={user._id}>
                         <td>{user.name}</td>

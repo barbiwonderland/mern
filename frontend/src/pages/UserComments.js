@@ -1,25 +1,18 @@
-import React, { useCallback, useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Button, Spinner } from "react-bootstrap"
-import { GetUserComments } from "../services/commentService"
 import { useParams } from "react-router-dom"
 import { CommentsContainer } from "../components/CommentsContainer"
 import { FormComments } from "../components/FormComments"
 import { useSelector, useDispatch } from "react-redux"
-import {
-  fetchComments,
-  fetchCommentsById,
-} from "../redux/reducers/commentSlice"
+import { fetchCommentsById } from "../redux/reducers/commentSlice"
 
 export const UserComments = () => {
   const [commentsFromApi, setCommentsFromApi] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
   const [modalComments, setModalComments] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
-  const [updateUser, setUpdateUser] = useState([])
   // value of input comments
   const [inputOfCommentsValue, setInputOfCommentsValue] = useState("")
   const { comments, loading } = useSelector((state) => state.comments)
-  console.log(comments, loading)
   let { id } = useParams()
   const dispatch = useDispatch()
   const handleClose = (newComment) => {

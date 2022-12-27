@@ -36,7 +36,7 @@ export const FormComments = ({
     } else {
       let newComment = {
         comment: inputOfCommentsValue,
-        date: "05/03/1010",
+        date: new Date(),
         userId: Date.now(),
       }
       addComment(newComment, id).then((res) => {
