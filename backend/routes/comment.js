@@ -20,7 +20,7 @@ router.route('/add/:id').post((req, res) =>
     const newComment = new Comment({   // Guardo los datos que ingresa el usuario en variables
         comment: req.body.comment,
         userId: (req.params.id),
-        date: new Date().toLocaleString()
+        date: new Date()
 
     });
 
