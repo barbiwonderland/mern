@@ -1,83 +1,94 @@
-import React, { useEffect, useState } from "react"
-import { deleteUser } from "../services/userService"
-import { BiEdit, BiTrash, BiMessageRoundedAdd } from "react-icons/bi"
-import { useNavigate } from "react-router-dom"
-import { Spinner } from "react-bootstrap"
-import { Searcher } from "./Searcher"
-import { useSelector, useDispatch } from "react-redux"
-import MessageTost from "./MessageTost"
-import { FormAddOrEditUsers } from "./FormAddOrEditUsers"
-import { deleteUserRedux, fetchUsers } from "../redux/reducers/userSlice"
-export const ListUsers = () => {
-  const dispatch = useDispatch()
-  const [userFromApi, setUserFromApi] = useState([])
-  const [isEdit, setIsEdit] = useState(false)
-  const [updateUser, setUpdateUser] = useState([])
-  const [showToast, setShowToast] = useState(false)
-  const [editModal, setEditModal] = useState(false)
-  const [valueForSearch, setValueForSearch] = useState("")
-  const [userFiltered, setUserFiltered] = useState([])
+import React, { useEffect, useState } from "react";
+import { deleteUser } from "../services/userService";
+import { BiEdit, BiTrash, BiMessageRoundedAdd } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
+import { Spinner } from "react-bootstrap";
+import { Searcher } from "./Searcher";
+import { useSelector, useDispatch } from "react-redux";
+import MessageTost from "./MessageTost";
+import { FormAddOrEditUsers } from "./FormAddOrEditUsers";
+import { deleteUserRedux, fetchUsers } from "../redux/reducers/userSlice";
+export const ListUsers = () =>
+{
+  const dispatch = useDispatch();
+  const [userFromApi, setUserFromApi] = useState([]);
+  const [isEdit, setIsEdit] = useState(false);
+  const [updateUser, setUpdateUser] = useState([]);
+  const [showToast, setShowToast] = useState(false);
+  const [editModal, setEditModal] = useState(false);
+  const [valueForSearch, setValueForSearch] = useState("");
+  const [userFiltered, setUserFiltered] = useState([]);
 
-  let navigate = useNavigate()
+  let navigate = useNavigate();
 
-  const { users } = useSelector((state) => state.users)
-  const handleClose = () => setEditModal(false)
-  const handleCloseToast = () => setShowToast(false)
+  const { users, loading } = useSelector((state) => state.users);
+  const handleClose = () => setEditModal(false);
+  const handleCloseToast = () => setShowToast(false);
 
-  const handleUsers = async () => {
-    const rta = dispatch(fetchUsers())
-  }
+  const handleUsers = async () =>
+  {
+    const rta = dispatch(fetchUsers());
+  };
 
-  const FilterByCategory = (value) => {
+  const FilterByCategory = (value) =>
+  {
     // si el input no esta vacio..
-    if (value !== "") {
+    if (value !== "")
+    {
       // filtro los elementos que incluyen el valor por nombre o name
       // paso los valores que ingresa el usuario a lowercase para unificar
-      value = value.toLowerCase()
+      value = value.toLowerCase();
       const result = users.filter(
         (user) =>
           user.name.toLowerCase().includes(value) ||
           user.email.toLowerCase().includes(value)
-      )
+      );
       // se modifica el segundo array con los datos originales
-      setUserFiltered(result)
-    } else {
+      setUserFiltered(result);
+    } else
+    {
       // sino vuelvo a cargar la lista porque quedo seteado con la busqueda anterior que hizo el usuario
-      setUserFiltered(users)
+      setUserFiltered(users);
     }
-  }
+  };
 
   // En el use effect si pasamos por parametro la variable users, se crea un loop eterno,
   //porque en el primer renderizado detecta el cambio dentro de handleUsers funcion de "user",
   //entonces vuelve a ejecutar el useeffect infinitas veces
-  useEffect(() => {
-    handleUsers()
-  }, [])
-  useEffect(() => {
-    setUserFromApi(users)
-    setUserFiltered(users)
-  }, [users])
+  useEffect(() =>
+  {
+    handleUsers();
+  }, []);
+  useEffect(() =>
+  {
+    setUserFromApi(users);
+    setUserFiltered(users);
+  }, [users]);
 
   // llaas a filtrar la busqueda cada vez que el usuario cambia algo en el buscador y cada vez que se elimina
   //definitivamente un usuario en la lista original
-  useEffect(() => {
-    FilterByCategory(valueForSearch)
-  }, [valueForSearch, userFromApi])
+  useEffect(() =>
+  {
+    FilterByCategory(valueForSearch);
+  }, [valueForSearch, userFromApi]);
 
-  const handleDelete = (userForDelete) => {
-    deleteUser(userForDelete)
-    dispatch(deleteUserRedux(userForDelete))
-  }
-  const handleEdit = (userEdited) => {
+  const handleDelete = (userForDelete) =>
+  {
+    deleteUser(userForDelete);
+    dispatch(deleteUserRedux(userForDelete));
+  };
+  const handleEdit = (userEdited) =>
+  {
     //agrego el id en la barra de busqueda
-    navigate(`/users/${userEdited}`)
-    setIsEdit(true)
-    setEditModal(true)
-  }
-  const handleComments = (id) => {
-    navigate(`/comments/${id}`)
-  }
-  return users.loading ? (
+    navigate(`/users/${userEdited}`);
+    setIsEdit(true);
+    setEditModal(true);
+  };
+  const handleComments = (id) =>
+  {
+    navigate(`/comments/${id}`);
+  };
+  return loading ? (
     <div className="justify-content-center d-flex align-items-center height-100 ">
       <Spinner
         animation="border"
@@ -148,5 +159,5 @@ export const ListUsers = () => {
         Todavía no hay usuarios registrados..
       </h5>
     </>
-  )
-}
+  );
+};
