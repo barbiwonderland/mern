@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react"
-import { Card } from "react-bootstrap"
-import { BiTrash, BiPencil } from "react-icons/bi"
-import { useNavigate } from "react-router-dom"
-import { deleteUserRedux } from "../redux/reducers/userSlice"
-import { deleteComment } from "../services/commentService"
-import { useDispatch } from "react-redux"
-import { deletecommentRedux } from "../redux/reducers/commentSlice"
+import React, { useEffect, useState } from "react";
+import { Card } from "react-bootstrap";
+import { BiTrash, BiPencil } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
+import { deleteUserRedux } from "../redux/reducers/userSlice";
+import { deleteComment } from "../services/commentService";
+import { useDispatch } from "react-redux";
+import { deletecommentRedux } from "../redux/reducers/commentSlice";
 export const CommentsContainer = ({
   commentId,
   userComment,
@@ -15,22 +15,26 @@ export const CommentsContainer = ({
   setModalComments,
   setIsEdit,
   setInputOfCommentsValue,
-}) => {
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+}) =>
+{
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const handleDelete = (commentId) => {
-    deleteComment(commentId)
-    dispatch(deletecommentRedux(commentId))
+  const handleDelete = (commentId) =>
+  {
+    deleteComment(commentId);
+    dispatch(deletecommentRedux(commentId));
     // eliminar en la base de datos
-  }
-  const handleEdit = (commentId, userComment) => {
-    navigate(`/comments/update/${commentId}`)
-    setIsEdit(true)
-    setInputOfCommentsValue(userComment)
+  };
+  const handleEdit = (commentId, userComment) =>
+  {
+    navigate(`/comments/update/${commentId}`);
+    setIsEdit(true);
+    setInputOfCommentsValue(userComment);
     // abro el form modal para editar
-    setModalComments(true)
-  }
+    setModalComments(true);
+  };
+
   return (
     <Card>
       <Card.Header>
@@ -49,5 +53,5 @@ export const CommentsContainer = ({
         </blockquote>
       </Card.Body>
     </Card>
-  )
-}
+  );
+};

@@ -1,32 +1,35 @@
-import React, { useEffect, useState } from "react"
-import { Button, Spinner } from "react-bootstrap"
-import { useParams } from "react-router-dom"
-import { CommentsContainer } from "../components/CommentsContainer"
-import { FormComments } from "../components/FormComments"
-import { useSelector, useDispatch } from "react-redux"
-import { fetchCommentsById } from "../redux/reducers/commentSlice"
+import React, { useEffect, useState } from "react";
+import { Button, Spinner } from "react-bootstrap";
+import { useParams } from "react-router-dom";
+import { CommentsContainer } from "../components/CommentsContainer";
+import { FormComments } from "../components/FormComments";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchCommentsById } from "../redux/reducers/commentSlice";
 
-export const UserComments = () => {
-  const [commentsFromApi, setCommentsFromApi] = useState([])
-  const [modalComments, setModalComments] = useState(false)
-  const [isEdit, setIsEdit] = useState(false)
+export const UserComments = () =>
+{
+  const [commentsFromApi, setCommentsFromApi] = useState([]);
+  const [modalComments, setModalComments] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
   // value of input comments
-  const [inputOfCommentsValue, setInputOfCommentsValue] = useState("")
-  const { comments, loading } = useSelector((state) => state.comments)
-  let { id } = useParams()
-  const dispatch = useDispatch()
-  const handleClose = (newComment) => {
-    console.log(newComment)
-    setModalComments(false)
-  }
-  useEffect(() => {
+  const [inputOfCommentsValue, setInputOfCommentsValue] = useState("");
+  const { comments, loading } = useSelector((state) => state.comments);
+  let { id } = useParams();
+  const dispatch = useDispatch();
+  const handleClose = (newComment) =>
+  {
+    console.log(newComment);
+    setModalComments(false);
+  };
+  useEffect(() =>
+  {
     // Me traigo todos los comentarios de la api en el primer renderizado
-    const handleComments = async () => {
-      dispatch(fetchCommentsById(id))
-    }
-    handleComments()
-  }, [])
-
+    const handleComments = async () =>
+    {
+      dispatch(fetchCommentsById(id));
+    };
+    handleComments();
+  }, []);
   return loading ? (
     <div className="justify-content-center d-flex align-items-center height-100 ">
       <Spinner
@@ -42,10 +45,11 @@ export const UserComments = () => {
         <div className="row">
           <div className="col-md-">
             <Button
-              onClick={() => {
-                setModalComments(true)
-                setIsEdit(false)
-                setInputOfCommentsValue("")
+              onClick={() =>
+              {
+                setModalComments(true);
+                setIsEdit(false);
+                setInputOfCommentsValue("");
               }}
               variant="dark"
               className="my-3 d-flex mx-auto"
@@ -65,18 +69,27 @@ export const UserComments = () => {
             />
             {comments.length > 0 ? (
               <>
-                {comments.map(({ comment, _id, date }) => (
-                  <CommentsContainer
-                    setInputOfCommentsValue={setInputOfCommentsValue}
-                    setIsEdit={setIsEdit}
-                    setModalComments={setModalComments}
-                    commentsFromApi={commentsFromApi}
-                    setCommentsFromApi={setCommentsFromApi}
-                    userComment={comment}
-                    commentId={_id}
-                    createdAt={date}
-                  />
-                ))}
+                {comments.map(
+
+                  ({ comment, _id, createdAt }) =>
+                  {
+                    console.log(createdAt);
+                    let fecha = new Date(createdAt);
+                    console.log(fecha, "fecha1");
+                    fecha = fecha.toLocaleString('es-AR');
+                    console.log(fecha, "fecha2");
+                    return (
+                      <CommentsContainer
+                        setInputOfCommentsValue={setInputOfCommentsValue}
+                        setIsEdit={setIsEdit}
+                        setModalComments={setModalComments}
+                        commentsFromApi={commentsFromApi}
+                        setCommentsFromApi={setCommentsFromApi}
+                        userComment={comment}
+                        commentId={_id}
+                        createdAt={fecha}
+                      />);
+                  })}
               </>
             ) : (
               <>
@@ -89,5 +102,5 @@ export const UserComments = () => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
