@@ -1,5 +1,5 @@
 import axios from "axios";
-const urlBackend = "https://mern-production-9c77.up.railway.app";
+const urlBackend = "https://apimern.onrender.com";
 // const urlBackend = "http://localhost:3001"
 export const getComments = async () =>
 {
