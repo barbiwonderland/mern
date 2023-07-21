@@ -49,4 +49,4 @@ app.listen(port, host, () =>
     console.log(`Server is running on port: ${port}`);
 });
 
-export const handler = serverless(app);
+module.exports.handler = serverless(app);
