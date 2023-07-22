@@ -1,6 +1,6 @@
 import axios from "axios";
 // pasar a variable de entorno
-const urlBackend = "https://apimern.onrender.com"
+const urlBackend = "https://mern-91nlri9jb-barbiwonderland.vercel.app"
 console.log(urlBackend);
 //const urlBackend="http://localhost:3001"
 export const getUsers = async () =>
