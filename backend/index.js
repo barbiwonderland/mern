@@ -1,7 +1,6 @@
 const express = require("express");
 const cors = require('cors');
 const mongoose = require('mongoose');
-const serverless = require('serverless-http');
 
 require('dotenv').config();
 
@@ -49,4 +48,3 @@ app.listen(port, host, () =>
     console.log(`Server is running on port: ${port}`);
 });
 
-module.exports.handler = serverless(app);
