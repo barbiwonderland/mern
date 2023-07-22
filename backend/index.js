@@ -34,8 +34,8 @@ connection.once('open', () =>
 });
 
 //RUTAS CREADAS PARA LA API
-const usersRouter = require('../routes/user');
-const commentsRouter = require('../routes/comment');
+const usersRouter = require('./routes/user');
+const commentsRouter = require('./routes/comment');
 
 // LE DIGO A LA API QUE USE LAS RUTAS DECLARADAS EN EL PASO ANTERIOR
 app.use('/users', usersRouter);
